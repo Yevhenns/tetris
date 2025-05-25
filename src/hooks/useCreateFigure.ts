@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useMoveFigure } from "./useMoveFigure";
 import { END_ROW } from "../assets/constants";
 import { useFilledBoxes } from "./useFilledBoxes";
+import { useRandomFigure } from "./useRandomFigure";
 
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
@@ -9,6 +10,7 @@ export const useCreateFigure = () => {
   const { isCollisionY, isGameOver, filledCoords } = useFilledBoxes({
     figureCoords,
   });
+  const { figure, generateRandomFigure } = useRandomFigure();
   useMoveFigure({ setFigureCoords, figureCoords, filledCoords });
 
   useEffect(() => {
@@ -17,11 +19,8 @@ export const useCreateFigure = () => {
         if (!isCollisionY && prevCoords.some((item) => item.y < END_ROW)) {
           return prevCoords.map((item) => ({ x: item.x, y: item.y + 1 }));
         } else {
-          return [
-            // TODO add random figure
-            { x: 5, y: 1 },
-            { x: 6, y: 1 },
-          ];
+          generateRandomFigure();
+          return figure?.coords.map((coord) => ({ ...coord })) ?? [];
         }
       });
     }, 500);
@@ -31,7 +30,8 @@ export const useCreateFigure = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isCollisionY, isGameOver]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCollisionY, isGameOver, figure?.coords]);
 
-  return { figureCoords, filledCoords, isGameOver };
+  return { figureCoords, filledCoords, isGameOver, figure };
 };

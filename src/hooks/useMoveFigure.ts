@@ -12,32 +12,39 @@ export const useMoveFigure = ({
   figureCoords,
   filledCoords,
 }: useMoveFigureProps) => {
-  const getIsCollisionX = () =>
+  const getIsCollisionMinusX = () =>
     figureCoords.some((fig) => {
-      const movedPlusX = fig.x + 1;
       const movedMinusX = fig.x - 1;
 
       return filledCoords.some(
-        (filled) =>
-          (filled.y === fig.y && filled.x === movedPlusX) ||
-          (filled.y === fig.y && filled.x === movedMinusX)
+        (filled) => filled.y === fig.y && filled.x === movedMinusX
       );
     });
 
-  const isCollisionX = getIsCollisionX();
+  const getIsCollisionPlusX = () =>
+    figureCoords.some((fig) => {
+      const movedPlusX = fig.x + 1;
+
+      return filledCoords.some(
+        (filled) => filled.y === fig.y && filled.x === movedPlusX
+      );
+    });
+
+  const isCollisionMinusX = getIsCollisionMinusX();
+  const isCollisionPlusX = getIsCollisionPlusX();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setFigureCoords((prev) => {
         if (e.code === "ArrowLeft") {
-          if (isCollisionX || prev.some((item) => item.x === START_BOX))
+          if (isCollisionMinusX || prev.some((item) => item.x === START_BOX))
             return prev;
           else {
             return prev.map((item) => ({ x: item.x - 1, y: item.y }));
           }
         }
         if (e.code === "ArrowRight") {
-          if (isCollisionX || prev.some((item) => item.x === END_COLUMN))
+          if (isCollisionPlusX || prev.some((item) => item.x === END_COLUMN))
             return prev;
           else {
             return prev.map((item) => ({ x: item.x + 1, y: item.y }));
@@ -53,5 +60,5 @@ export const useMoveFigure = ({
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isCollisionX, setFigureCoords]);
+  }, [isCollisionMinusX, isCollisionPlusX, setFigureCoords]);
 };
