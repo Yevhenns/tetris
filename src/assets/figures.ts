@@ -41,3 +41,5 @@ export const figures = [
     ],
   },
 ];
+
+export type Figure = (typeof figures)[number];

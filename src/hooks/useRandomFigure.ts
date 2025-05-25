@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { figures } from "../assets/figures";
+import { figures, type Figure } from "../assets/figures";
 
 export const useRandomFigure = () => {
-  const [figure, setFigure] = useState<(typeof figures)[number] | null>(null);
+  const [figure, setFigure] = useState<Figure | null>(null);
 
   const generateRandomFigure = () => {
     const randomIndex = Math.floor(Math.random() * figures.length);
