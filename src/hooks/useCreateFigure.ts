@@ -7,7 +7,7 @@ import { useRandomFigure } from "./useRandomFigure";
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
 
-  const { isCollisionY, isGameOver, filledCoords } = useFilledBoxes({
+  const { isCollisionY, isGameOver, filledCoords, score } = useFilledBoxes({
     figureCoords,
   });
   const { figure, generateRandomFigure } = useRandomFigure();
@@ -33,5 +33,5 @@ export const useCreateFigure = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCollisionY, isGameOver, figure?.coords]);
 
-  return { figureCoords, filledCoords, isGameOver, figure };
+  return { figureCoords, filledCoords, isGameOver, figure, score };
 };

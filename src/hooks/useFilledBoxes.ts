@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { END_ROW } from "../assets/constants";
+import { END_COLUMN, END_ROW, START_BOX } from "../assets/constants";
 
 interface useFilledBoxesProps {
   figureCoords: Row;
@@ -7,6 +7,39 @@ interface useFilledBoxesProps {
 
 export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
   const [filledCoords, setFilledCoords] = useState<Row>([]);
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const filteredByRows = [] as Row[];
+    const filteredByY = (n: number): Row =>
+      filledCoords.filter((item) => item.y === n);
+
+    for (let i = START_BOX; i <= END_ROW; i++) {
+      filteredByRows.push(filteredByY(i));
+    }
+
+    filteredByRows.some((row) => {
+      if (row.length === END_COLUMN) {
+        const deleteRowY = row[0].y;
+
+        const withoutDeletedRow = filledCoords.filter(
+          (item1) => item1.y !== deleteRowY
+        );
+
+        const movedRows = withoutDeletedRow.map((item) =>
+          item.y < deleteRowY
+            ? {
+                x: item.x,
+                y: item.y + 1,
+              }
+            : item
+        );
+
+        setFilledCoords(movedRows);
+        setScore(score + 10);
+      }
+    });
+  }, [filledCoords, score]);
 
   const getIsCollisionY = () =>
     figureCoords.some((fig) => {
@@ -33,5 +66,5 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
     }
   }, [figureCoords, isCollisionY]);
 
-  return { isCollisionY, isGameOver, filledCoords };
+  return { isCollisionY, isGameOver, filledCoords, score };
 };

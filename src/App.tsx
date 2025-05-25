@@ -3,7 +3,8 @@ import { useCreateFigure } from "./hooks/useCreateFigure";
 
 function App() {
   const { board } = useCreateBoard();
-  const { figureCoords, filledCoords, isGameOver, figure } = useCreateFigure();
+  const { figureCoords, filledCoords, isGameOver, figure, score } =
+    useCreateFigure();
 
   const isActiveFigure = (x: number, y: number) => {
     return figureCoords.some((item) => item.x === x && item.y === y);
@@ -17,6 +18,7 @@ function App() {
     <main>
       {isGameOver && <p>Game over</p>}
       {!isGameOver && <p>Next: {figure?.name}</p>}
+      <p>Score: {score}</p>
       <div className="border-2">
         {board?.map((row, index) => (
           <div key={index} className="flex justify-between">
