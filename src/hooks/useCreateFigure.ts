@@ -1,34 +1,16 @@
 import { useEffect, useState } from "react";
 import { useMoveFigure } from "./useMoveFigure";
 import { END_ROW } from "../assets/constants";
+import { useFilledBoxed } from "./useFilledBoxed";
 
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
-  const [filledCoords, setFilledCoords] = useState<Row>([]);
+
+  const { isCollision, isGameOver, filledCoords } = useFilledBoxed({
+    figureCoords,
+  });
 
   useMoveFigure({ setFigureCoords });
-
-  const getIsCollision = () =>
-    figureCoords.some((fig) => {
-      const movedY = fig.y + 1;
-      return filledCoords.some(
-        (filled) => filled.x === fig.x && filled.y === movedY
-      );
-    });
-
-  const isCollision = getIsCollision();
-
-  const isGameOver = filledCoords.some(
-    (item) => (item.x === 5 || item.x === 6) && item.y === 1
-  );
-
-  useEffect(() => {
-    if (isCollision || figureCoords.some((item) => item.y === END_ROW)) {
-      setFilledCoords((prev) => {
-        return [...prev, ...figureCoords];
-      });
-    }
-  }, [figureCoords, isCollision]);
 
   useEffect(() => {
     const interval = setInterval(() => {
