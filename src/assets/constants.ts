@@ -1,3 +1,5 @@
-export const COLUMNS = 10;
+export const START_BOX = 1;
 
-export const ROWS = 15;
+export const END_COLUMN = 10;
+
+export const END_ROW = 15;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMoveFigure } from "./useMoveFigure";
-import { ROWS } from "../assets/constants";
+import { END_ROW } from "../assets/constants";
 
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
@@ -23,7 +23,7 @@ export const useCreateFigure = () => {
   );
 
   useEffect(() => {
-    if (isCollision || figureCoords.some((item) => item.y === ROWS)) {
+    if (isCollision || figureCoords.some((item) => item.y === END_ROW)) {
       setFilledCoords((prev) => {
         return [...prev, ...figureCoords];
       });
@@ -31,7 +31,7 @@ export const useCreateFigure = () => {
 
     const interval = setInterval(() => {
       setFigureCoords((prevCoords) => {
-        if (!isCollision && prevCoords.some((item) => item.y < ROWS)) {
+        if (!isCollision && prevCoords.some((item) => item.y < END_ROW)) {
           return prevCoords.map((item) => ({ x: item.x, y: item.y + 1 }));
         } else {
           return [
