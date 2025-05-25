@@ -11,10 +11,12 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
   const getIsCollisionY = () =>
     figureCoords.some((fig) => {
       const movedY = fig.y + 1;
-      return filledCoords.some(
-        (filled) =>
-          filled.x === fig.x && (filled.y === movedY || filled.y === END_ROW)
+
+      const isTouchingBottom = movedY > END_ROW;
+      const isTouchingFilled = filledCoords.some(
+        (filled) => filled.x === fig.x && filled.y === movedY
       );
+      return isTouchingBottom || isTouchingFilled;
     });
 
   const isCollisionY = getIsCollisionY();
