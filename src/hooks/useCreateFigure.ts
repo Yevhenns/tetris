@@ -28,7 +28,9 @@ export const useCreateFigure = () => {
         return [...prev, ...figureCoords];
       });
     }
+  }, [figureCoords, isCollision]);
 
+  useEffect(() => {
     const interval = setInterval(() => {
       setFigureCoords((prevCoords) => {
         if (!isCollision && prevCoords.some((item) => item.y < END_ROW)) {
@@ -48,7 +50,7 @@ export const useCreateFigure = () => {
     }
 
     return () => clearInterval(interval);
-  }, [figureCoords, isCollision, isGameOver]);
+  }, [isCollision, isGameOver]);
 
   return { figureCoords, filledCoords, isGameOver };
 };
