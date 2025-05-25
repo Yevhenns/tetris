@@ -1,10 +1,8 @@
-import { useCreateBoard } from "./hooks/useCreateBoard";
-import { useCreateFigure } from "./hooks/useCreateFigure";
+import { useEngine } from "./hooks/useEngine";
 
 function App() {
-  const { board } = useCreateBoard();
-  const { figureCoords, filledCoords, isGameOver, figure, score } =
-    useCreateFigure();
+  const { board, figureCoords, filledCoords, isGameOver, figure, score } =
+    useEngine();
 
   const isActiveFigure = (x: number, y: number) => {
     return figureCoords.some((item) => item.x === x && item.y === y);
