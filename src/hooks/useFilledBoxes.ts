@@ -12,7 +12,8 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
     figureCoords.some((fig) => {
       const movedY = fig.y + 1;
       return filledCoords.some(
-        (filled) => filled.x === fig.x && filled.y === movedY
+        (filled) =>
+          filled.x === fig.x && (filled.y === movedY || filled.y === END_ROW)
       );
     });
 
