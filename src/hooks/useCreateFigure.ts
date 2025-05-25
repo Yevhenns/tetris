@@ -11,7 +11,7 @@ export const useCreateFigure = () => {
     figureCoords,
   });
   const { figure, generateRandomFigure } = useRandomFigure();
-  useMoveFigure({ setFigureCoords, figureCoords, filledCoords });
+  useMoveFigure({ setFigureCoords, figureCoords, filledCoords, isCollisionY });
 
   useEffect(() => {
     const interval = setInterval(() => {
