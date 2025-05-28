@@ -13,19 +13,26 @@ function App() {
   };
 
   return (
-    <main>
-      {isGameOver && <p>Game over</p>}
-      {!isGameOver && <p>Next: {figure?.name}</p>}
-      <p>Score: {score}</p>
-      <div className="border-2">
+    <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
+      <div className="text-xl font-bold">
+        {isGameOver ? "🧨 Game Over" : `🎮 Next: ${figure?.name}`}
+      </div>
+      <p className="text-lg">🏆 Score: {score}</p>
+      <div className="border-4 border-gray-700 bg-black p-2 rounded">
         {board?.map((row, index) => (
           <div key={index} className="flex justify-between">
             {row.map((box, idx) => (
               <div
                 key={idx}
-                className={`p-2 w-6 h-6
-                  ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
-                  ${isFilledBoard(box.x, box.y) ? "bg-green-500" : ""}`}
+                className={`w-6 h-6 border border-gray-800
+                  ${
+                    isActiveFigure(box.x, box.y)
+                      ? "bg-red-500 animate-pulse"
+                      : ""
+                  }
+                  ${
+                    isFilledBoard(box.x, box.y) ? "bg-green-600" : "bg-gray-800"
+                  }`}
               />
             ))}
           </div>
