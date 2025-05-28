@@ -1,8 +1,16 @@
 import { useEngine } from "./hooks/useEngine";
 
 function App() {
-  const { board, figureCoords, filledCoords, isGameOver, figure, score } =
-    useEngine();
+  const {
+    board,
+    figureCoords,
+    filledCoords,
+    isGameOver,
+    figure,
+    score,
+    moveLeft,
+    moveRight,
+  } = useEngine();
 
   const isActiveFigure = (x: number, y: number) => {
     return figureCoords.some((item) => item.x === x && item.y === y);
@@ -37,6 +45,10 @@ function App() {
             ))}
           </div>
         ))}
+      </div>
+      <div className="flex gap-4">
+        <button onClick={moveLeft}>Left</button>
+        <button onClick={moveRight}>Right</button>
       </div>
     </main>
   );

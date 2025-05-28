@@ -35,6 +35,34 @@ export const useMoveFigure = ({
   const isCollisionMinusX = getIsCollisionMinusX();
   const isCollisionPlusX = getIsCollisionPlusX();
 
+  const moveLeft = () => {
+    setFigureCoords((prev) => {
+      if (
+        isCollisionY ||
+        isCollisionMinusX ||
+        prev.some((item) => item.x === START_BOX)
+      )
+        return prev;
+      else {
+        return prev.map((item) => ({ x: item.x - 1, y: item.y }));
+      }
+    });
+  };
+
+  const moveRight = () => {
+    setFigureCoords((prev) => {
+      if (
+        isCollisionY ||
+        isCollisionPlusX ||
+        prev.some((item) => item.x === END_COLUMN)
+      )
+        return prev;
+      else {
+        return prev.map((item) => ({ x: item.x + 1, y: item.y }));
+      }
+    });
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setFigureCoords((prev) => {
@@ -71,4 +99,6 @@ export const useMoveFigure = ({
 
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isCollisionMinusX, isCollisionPlusX, isCollisionY, setFigureCoords]);
+
+  return { moveLeft, moveRight };
 };

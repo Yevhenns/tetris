@@ -11,7 +11,12 @@ export const useCreateFigure = () => {
     figureCoords,
   });
   const { figure, generateRandomFigure } = useRandomFigure();
-  useMoveFigure({ setFigureCoords, figureCoords, filledCoords, isCollisionY });
+  const { moveLeft, moveRight } = useMoveFigure({
+    setFigureCoords,
+    figureCoords,
+    filledCoords,
+    isCollisionY,
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,5 +38,13 @@ export const useCreateFigure = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCollisionY, isGameOver, figure?.coords]);
 
-  return { figureCoords, filledCoords, isGameOver, figure, score };
+  return {
+    figureCoords,
+    filledCoords,
+    isGameOver,
+    figure,
+    score,
+    moveLeft,
+    moveRight,
+  };
 };
