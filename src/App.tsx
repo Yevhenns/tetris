@@ -1,5 +1,6 @@
 import { Board } from "./components/Board";
 import { GameControls } from "./components/GameControls";
+import { GameInfo } from "./components/GameInfo";
 import { useEngine } from "./hooks/useEngine";
 
 function App() {
@@ -16,10 +17,7 @@ function App() {
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
-      <div className="text-xl font-bold">
-        {isGameOver ? "🧨 Game Over" : `🎮 Next: ${figure?.name}`}
-      </div>
-      <p className="text-lg">🏆 Score: {score}</p>
+      <GameInfo isGameOver={isGameOver} figure={figure} score={score} />
       <Board
         board={board}
         figureCoords={figureCoords}
