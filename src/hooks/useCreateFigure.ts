@@ -4,7 +4,11 @@ import { END_ROW } from "../assets/constants";
 import { useFilledBoxes } from "./useFilledBoxes";
 import { useRandomFigure } from "./useRandomFigure";
 
-export const useCreateFigure = () => {
+interface useCreateFigureProps {
+  speed: number;
+}
+
+export const useCreateFigure = ({ speed }: useCreateFigureProps) => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
 
   const { isCollisionY, isGameOver, filledCoords, score } = useFilledBoxes({
@@ -28,7 +32,7 @@ export const useCreateFigure = () => {
           return figure?.coords.map((coord) => ({ ...coord })) ?? [];
         }
       });
-    }, 500);
+    }, speed);
 
     if (isGameOver) {
       clearInterval(interval);
@@ -36,7 +40,7 @@ export const useCreateFigure = () => {
 
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCollisionY, isGameOver, figure?.coords]);
+  }, [isCollisionY, isGameOver, speed, figure?.coords]);
 
   return {
     figureCoords,

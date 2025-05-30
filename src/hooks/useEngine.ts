@@ -1,7 +1,11 @@
 import { useCreateBoard } from "./useCreateBoard";
 import { useCreateFigure } from "./useCreateFigure";
 
-export const useEngine = () => {
+interface useEngineProps {
+  speed: number;
+}
+
+export const useEngine = ({ speed }: useEngineProps) => {
   const { board } = useCreateBoard();
   const {
     figureCoords,
@@ -11,7 +15,7 @@ export const useEngine = () => {
     score,
     moveLeft,
     moveRight,
-  } = useCreateFigure();
+  } = useCreateFigure({ speed });
 
   return {
     board,
