@@ -27,11 +27,7 @@ export const Board: FC<BoardProps> = ({
             <div
               key={idx}
               className={`w-6 h-6 border border-gray-800
-                  ${
-                    isActiveFigure(box.x, box.y)
-                      ? "bg-red-500 animate-pulse"
-                      : ""
-                  }
+                  ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
                   ${
                     isFilledBoard(box.x, box.y) ? "bg-green-600" : "bg-gray-800"
                   }`}
