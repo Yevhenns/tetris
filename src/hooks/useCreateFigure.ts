@@ -14,6 +14,11 @@ export const useCreateFigure = ({
   fastMoveDownHandler,
 }: useCreateFigureProps) => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
+  const [startGame, setStartGame] = useState(false);
+
+  const startGameHandler = () => {
+    setStartGame(true);
+  };
 
   const { isCollisionY, isGameOver, filledCoords, score } = useFilledBoxes({
     figureCoords,
@@ -28,24 +33,26 @@ export const useCreateFigure = ({
   });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFigureCoords((prevCoords) => {
-        if (!isCollisionY && prevCoords.some((item) => item.y < END_ROW)) {
-          return prevCoords.map((item) => ({ x: item.x, y: item.y + 1 }));
-        } else {
-          generateRandomFigure();
-          return figure?.coords.map((coord) => ({ ...coord })) ?? [];
-        }
-      });
-    }, speed);
+    if (startGame) {
+      const interval = setInterval(() => {
+        setFigureCoords((prevCoords) => {
+          if (!isCollisionY && prevCoords.some((item) => item.y < END_ROW)) {
+            return prevCoords.map((item) => ({ x: item.x, y: item.y + 1 }));
+          } else {
+            generateRandomFigure();
+            return figure?.coords.map((coord) => ({ ...coord })) ?? [];
+          }
+        });
+      }, speed);
 
-    if (isGameOver) {
-      clearInterval(interval);
+      if (isGameOver) {
+        clearInterval(interval);
+      }
+
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCollisionY, isGameOver, speed, figure?.coords]);
+  }, [isCollisionY, isGameOver, speed, figure?.coords, startGame]);
 
   return {
     figureCoords,
@@ -56,5 +63,6 @@ export const useCreateFigure = ({
     moveLeft,
     moveRight,
     moveDown,
+    startGameHandler,
   };
 };

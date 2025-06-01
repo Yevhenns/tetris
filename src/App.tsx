@@ -33,11 +33,12 @@ function App() {
     moveLeft,
     moveRight,
     moveDown,
+    startGameHandler,
   } = useEngine({ speed, fastMoveDownHandler });
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
-      <Level speedHandler={speedHandler} />
+      <Level speedHandler={speedHandler} startGameHandler={startGameHandler} />
       <GameInfo isGameOver={isGameOver} figure={figure} score={score} />
       <Board
         board={board}

@@ -17,6 +17,7 @@ export const useEngine = ({ speed, fastMoveDownHandler }: useEngineProps) => {
     moveLeft,
     moveRight,
     moveDown,
+    startGameHandler,
   } = useCreateFigure({ speed, fastMoveDownHandler });
 
   return {
@@ -29,5 +30,6 @@ export const useEngine = ({ speed, fastMoveDownHandler }: useEngineProps) => {
     moveLeft,
     moveRight,
     moveDown,
+    startGameHandler,
   };
 };
