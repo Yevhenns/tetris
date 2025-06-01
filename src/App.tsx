@@ -36,6 +36,7 @@ function App() {
     moveDown,
     startGameHandler,
     restartGame,
+    rotate,
   } = useEngine({
     speed,
     fastMoveDownHandler,
@@ -45,12 +46,7 @@ function App() {
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
-      <Level
-        speedHandler={speedHandler}
-        startGameHandler={startGameHandler}
-        restartGame={restartGame}
-        isGameOver={isGameOver}
-      />
+      <Level speedHandler={speedHandler} />
       <GameInfo isGameOver={isGameOver} figure={figure} score={score} />
       <Board
         board={board}
@@ -58,9 +54,13 @@ function App() {
         filledCoords={filledCoords}
       />
       <GameControls
+        startGameHandler={startGameHandler}
+        restartGame={restartGame}
+        isGameOver={isGameOver}
         moveLeft={moveLeft}
         moveRight={moveRight}
         moveDown={moveDown}
+        rotate={rotate}
       />
     </main>
   );

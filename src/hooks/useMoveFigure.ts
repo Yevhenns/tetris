@@ -7,6 +7,7 @@ interface useMoveFigureProps {
   filledCoords: Row;
   isCollisionY: boolean;
   fastMoveDownHandler: (condition: boolean) => void;
+  rotate: () => void;
 }
 
 export const useMoveFigure = ({
@@ -15,6 +16,7 @@ export const useMoveFigure = ({
   filledCoords,
   isCollisionY,
   fastMoveDownHandler,
+  rotate,
 }: useMoveFigureProps) => {
   const getIsCollisionMinusX = () =>
     figureCoords.some((fig) => {
@@ -104,7 +106,8 @@ export const useMoveFigure = ({
           fastMoveDownHandler(isCollisionY);
         }
         if (e.code === "Space") {
-          console.log("rotate");
+          e.preventDefault();
+          rotate();
         }
         return prev;
       });
@@ -119,6 +122,7 @@ export const useMoveFigure = ({
     isCollisionY,
     setFigureCoords,
     fastMoveDownHandler,
+    rotate,
   ]);
 
   return { moveLeft, moveRight, moveDown };
