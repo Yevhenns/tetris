@@ -13,7 +13,6 @@ export const GameInfo: FC<GameInfoProps> = ({ isGameOver, figure, score }) => {
     endColumn: figure?.maxX || 0,
     endRow: figure?.maxY || 0,
   });
-  console.log(figure?.name);
 
   const isActiveFigure = (x: number, y: number) => {
     return figure?.coords.some((item) => item.x === x && item.y === y);
