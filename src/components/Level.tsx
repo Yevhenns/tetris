@@ -8,38 +8,39 @@ interface LevelProps {
 export const Level: FC<LevelProps> = ({ speedHandler, startGameHandler }) => {
   const [level, setLevel] = useState(1);
 
+  const setLevelHandler = (speed: number, level: number) => {
+    speedHandler(speed);
+    setLevel(level);
+  };
+
   return (
     <>
       <p>Level: {level}</p>
       <div className="flex gap-2">
         <button
           onClick={() => {
-            speedHandler(500);
-            setLevel(1);
+            setLevelHandler(500, 1);
           }}
         >
           1
         </button>
         <button
           onClick={() => {
-            speedHandler(400);
-            setLevel(2);
+            setLevelHandler(400, 2);
           }}
         >
           2
         </button>
         <button
           onClick={() => {
-            speedHandler(300);
-            setLevel(3);
+            setLevelHandler(300, 3);
           }}
         >
           3
         </button>
         <button
           onClick={() => {
-            speedHandler(200);
-            setLevel(4);
+            setLevelHandler(200, 4);
           }}
         >
           4
