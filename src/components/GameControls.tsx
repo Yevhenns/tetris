@@ -7,6 +7,7 @@ interface GameControlsProps {
   moveLeft: () => void;
   moveRight: () => void;
   moveDown: () => void;
+  rotate: () => void;
 }
 
 export const GameControls: FC<GameControlsProps> = ({
@@ -16,6 +17,7 @@ export const GameControls: FC<GameControlsProps> = ({
   moveLeft,
   moveRight,
   moveDown,
+  rotate,
 }) => {
   return (
     <>
@@ -24,6 +26,7 @@ export const GameControls: FC<GameControlsProps> = ({
       ) : (
         <button onClick={startGameHandler}>Start</button>
       )}
+      <button onClick={rotate}>Rotate</button>
       <div className="flex gap-4">
         <button onClick={moveLeft}>Left</button>
         <button onClick={moveDown}>Down</button>

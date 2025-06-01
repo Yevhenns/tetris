@@ -20,11 +20,9 @@ const checkOrientation = ({
 }: checkOrientationProps) => {
   const getIsCollisionY = (figure: Row) =>
     figure.some((fig) => {
-      const movedY = fig.y;
-
-      const isTouchingBottom = movedY === END_ROW;
+      const isTouchingBottom = fig.y === END_ROW;
       const isTouchingFilled = filledCoords.some(
-        (filled) => filled.x === fig.x && filled.y === movedY
+        (filled) => filled.x === fig.x && filled.y === fig.y
       );
       return isTouchingBottom || isTouchingFilled;
     });

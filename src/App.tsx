@@ -36,6 +36,7 @@ function App() {
     moveDown,
     startGameHandler,
     restartGame,
+    rotate,
   } = useEngine({
     speed,
     fastMoveDownHandler,
@@ -59,6 +60,7 @@ function App() {
         moveLeft={moveLeft}
         moveRight={moveRight}
         moveDown={moveDown}
+        rotate={rotate}
       />
     </main>
   );

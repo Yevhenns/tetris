@@ -106,6 +106,7 @@ export const useMoveFigure = ({
           fastMoveDownHandler(isCollisionY);
         }
         if (e.code === "Space") {
+          e.preventDefault();
           rotate();
         }
         return prev;
