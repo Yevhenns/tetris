@@ -8,22 +8,22 @@ interface useCreateBoard {
 export const useCreateBoard = ({ endColumn, endRow }: useCreateBoard) => {
   const [board, setBoard] = useState<Board>();
 
-  const createRow = (y: number) => {
-    const row = [] as Row;
-
-    for (let i = 1; i <= endColumn; i++) {
-      const rowObject = {
-        x: i,
-        y: y,
-      };
-      row.push(rowObject);
-    }
-
-    return row;
-  };
-
   useEffect(() => {
-    if (endColumn > 0) {
+    const createRow = (y: number) => {
+      const row = [] as Row;
+
+      for (let i = 1; i <= endColumn; i++) {
+        const rowObject = {
+          x: i,
+          y: y,
+        };
+        row.push(rowObject);
+      }
+
+      return row;
+    };
+
+    if (endColumn > 0 && endRow > 0) {
       const createBoard = () => {
         const board = [] as Board;
 
@@ -35,8 +35,7 @@ export const useCreateBoard = ({ endColumn, endRow }: useCreateBoard) => {
       };
       setBoard(createBoard());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [endColumn]);
+  }, [endColumn, endRow]);
 
   return { board };
 };
