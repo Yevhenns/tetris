@@ -4,6 +4,7 @@ import { GameControls } from "./components/GameControls";
 import { GameInfo } from "./components/GameInfo";
 import { Level } from "./components/Level";
 import { useEngine } from "./hooks/useEngine";
+import { END_COLUMN, END_ROW } from "./assets/constants";
 
 function App() {
   const [speed, setSpeed] = useState(500);
@@ -16,7 +17,7 @@ function App() {
 
   const fastMoveDownHandler = (condition: boolean) => {
     if (!condition) {
-      setSpeed(50);
+      setSpeed(30);
     }
     if (condition) {
       setSpeed(prevSpeedRef.current);
@@ -34,7 +35,12 @@ function App() {
     moveRight,
     moveDown,
     startGameHandler,
-  } = useEngine({ speed, fastMoveDownHandler });
+  } = useEngine({
+    speed,
+    fastMoveDownHandler,
+    endColumn: END_COLUMN,
+    endRow: END_ROW,
+  });
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
