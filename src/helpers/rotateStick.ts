@@ -7,7 +7,7 @@ interface RotateStickProps {
   filledCoords: Row;
 }
 
-interface checkOrientationProps extends RotateStickProps {
+interface CheckOrientationProps extends RotateStickProps {
   coord: "x" | "y";
 }
 
@@ -17,7 +17,7 @@ const checkOrientation = ({
   figureName,
   setFigureCoords,
   filledCoords,
-}: checkOrientationProps) => {
+}: CheckOrientationProps) => {
   const getIsCollisionY = (figure: Row) =>
     figure.some((fig) => {
       const isTouchingBottom = fig.y === END_ROW;
