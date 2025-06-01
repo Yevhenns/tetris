@@ -32,6 +32,7 @@ export const useCreateFigure = ({
     fastMoveDownHandler,
   });
 
+  console.log(figure);
   useEffect(() => {
     if (startGame) {
       const interval = setInterval(() => {
@@ -40,7 +41,15 @@ export const useCreateFigure = ({
             return prevCoords.map((item) => ({ x: item.x, y: item.y + 1 }));
           } else {
             generateRandomFigure();
-            return figure?.coords.map((coord) => ({ ...coord })) ?? [];
+            const maxY = figure?.coords[figure.coords.length - 1].y;
+
+            if (maxY)
+              return figure?.coords.map(({ x, y }) => ({
+                x: x + 4,
+                y: y - maxY + 1,
+              }));
+
+            return [];
           }
         });
       }, speed);
