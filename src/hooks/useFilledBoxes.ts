@@ -9,6 +9,11 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
   const [filledCoords, setFilledCoords] = useState<Row>([]);
   const [score, setScore] = useState(0);
 
+  const restartGame = () => {
+    setFilledCoords([]);
+    setScore(0);
+  };
+
   const getIsCollisionY = () =>
     figureCoords.some((fig) => {
       const movedY = fig.y + 1;
@@ -64,5 +69,5 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
     }
   }, [figureCoords, isCollisionY]);
 
-  return { isCollisionY, isGameOver, filledCoords, score };
+  return { isCollisionY, isGameOver, filledCoords, score, restartGame };
 };

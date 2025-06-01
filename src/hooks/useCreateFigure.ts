@@ -20,9 +20,10 @@ export const useCreateFigure = ({
     setStartGame(true);
   };
 
-  const { isCollisionY, isGameOver, filledCoords, score } = useFilledBoxes({
-    figureCoords,
-  });
+  const { isCollisionY, isGameOver, filledCoords, score, restartGame } =
+    useFilledBoxes({
+      figureCoords,
+    });
   const { figure, generateRandomFigure } = useRandomFigure();
   const { moveLeft, moveRight, moveDown } = useMoveFigure({
     setFigureCoords,
@@ -71,5 +72,6 @@ export const useCreateFigure = ({
     moveRight,
     moveDown,
     startGameHandler,
+    restartGame,
   };
 };

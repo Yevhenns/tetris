@@ -25,18 +25,19 @@ export const GameInfo: FC<GameInfoProps> = ({ isGameOver, figure, score }) => {
         {isGameOver ? "🧨 Game Over" : "🎮 Next:"}
       </div>
       <div className="h-24">
-        {board?.map((row, index) => (
-          <div key={index} className="flex justify-between">
-            {row.map((box, idx) => (
-              <div
-                key={idx}
-                className={`w-6 h-6 border border-gray-800
+        {!isGameOver &&
+          board?.map((row, index) => (
+            <div key={index} className="flex justify-between">
+              {row.map((box, idx) => (
+                <div
+                  key={idx}
+                  className={`w-6 h-6 border border-gray-800
                   ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
                 `}
-              />
-            ))}
-          </div>
-        ))}
+                />
+              ))}
+            </div>
+          ))}
       </div>
       <p className="text-lg">🏆 Score: {score}</p>
     </>
