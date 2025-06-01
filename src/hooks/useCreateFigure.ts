@@ -35,6 +35,7 @@ export const useCreateFigure = ({
         figureCoords,
         setFigureCoords,
         figureName,
+        filledCoords,
       });
   };
 

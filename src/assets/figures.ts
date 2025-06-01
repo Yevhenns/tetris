@@ -1,22 +1,22 @@
 export const figures = [
-  {
-    name: "shortBarHorizontal",
-    coords: [
-      { x: 1, y: 1 },
-      { x: 2, y: 1 },
-    ],
-    maxX: 2,
-    maxY: 1,
-  },
-  {
-    name: "shortBarVertical",
-    coords: [
-      { x: 1, y: 1 },
-      { x: 1, y: 2 },
-    ],
-    maxX: 1,
-    maxY: 2,
-  },
+  // {
+  //   name: "shortBarHorizontal",
+  //   coords: [
+  //     { x: 1, y: 1 },
+  //     { x: 2, y: 1 },
+  //   ],
+  //   maxX: 2,
+  //   maxY: 1,
+  // },
+  // {
+  //   name: "shortBarVertical",
+  //   coords: [
+  //     { x: 1, y: 1 },
+  //     { x: 1, y: 2 },
+  //   ],
+  //   maxX: 1,
+  //   maxY: 2,
+  // },
   {
     name: "longBarHorizontal",
     coords: [
@@ -39,23 +39,23 @@ export const figures = [
     maxX: 1,
     maxY: 4,
   },
-  {
-    name: "square",
-    coords: [
-      { x: 1, y: 1 },
-      { x: 1, y: 2 },
-      { x: 2, y: 1 },
-      { x: 2, y: 2 },
-    ],
-    maxX: 2,
-    maxY: 2,
-  },
-  {
-    name: "dot",
-    coords: [{ x: 1, y: 1 }],
-    maxX: 1,
-    maxY: 1,
-  },
+  // {
+  //   name: "square",
+  //   coords: [
+  //     { x: 1, y: 1 },
+  //     { x: 1, y: 2 },
+  //     { x: 2, y: 1 },
+  //     { x: 2, y: 2 },
+  //   ],
+  //   maxX: 2,
+  //   maxY: 2,
+  // },
+  // {
+  //   name: "dot",
+  //   coords: [{ x: 1, y: 1 }],
+  //   maxX: 1,
+  //   maxY: 1,
+  // },
 ];
 
 export type Figure = (typeof figures)[number];

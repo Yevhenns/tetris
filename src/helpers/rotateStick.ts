@@ -1,16 +1,14 @@
-import { END_COLUMN } from "../assets/constants";
+import { END_COLUMN, END_ROW } from "../assets/constants";
 
 interface RotateStickProps {
   figureCoords: Row;
   setFigureCoords: React.Dispatch<React.SetStateAction<Row>>;
   figureName: string;
+  filledCoords: Row;
 }
 
-interface checkOrientationProps {
-  figureCoords: Row;
+interface checkOrientationProps extends RotateStickProps {
   coord: "x" | "y";
-  figureName: string;
-  setFigureCoords: React.Dispatch<React.SetStateAction<Row>>;
 }
 
 const checkOrientation = ({
@@ -18,9 +16,21 @@ const checkOrientation = ({
   coord,
   figureName,
   setFigureCoords,
+  filledCoords,
 }: checkOrientationProps) => {
-  const isOutOfRightBorder = (figure: Row) =>
-    figure.some((item) => item.x === END_COLUMN + 1);
+  const getIsCollisionY = (figure: Row) =>
+    figure.some((fig) => {
+      const movedY = fig.y;
+
+      const isTouchingBottom = movedY === END_ROW;
+      const isTouchingFilled = filledCoords.some(
+        (filled) => filled.x === fig.x && filled.y === movedY
+      );
+      return isTouchingBottom || isTouchingFilled;
+    });
+
+  const isOutOfBorder = (figure: Row) =>
+    figure.some((item) => item.x === END_COLUMN + 1) || getIsCollisionY(figure);
 
   const firstBox = figureCoords[0];
   const { x, y } = firstBox;
@@ -52,12 +62,12 @@ const checkOrientation = ({
   if (
     (figureName === "shortBarHorizontal" ||
       figureName === "shortBarVertical") &&
-    !isOutOfRightBorder(rotatedShortStick)
+    !isOutOfBorder(rotatedShortStick)
   )
     setFigureCoords(rotatedShortStick);
   if (
     (figureName === "longBarHorizontal" || figureName === "longBarVertical") &&
-    !isOutOfRightBorder(rotatedLongStick)
+    !isOutOfBorder(rotatedLongStick)
   ) {
     setFigureCoords(rotatedLongStick);
   }
@@ -67,11 +77,24 @@ export const rotateStick = ({
   figureCoords,
   setFigureCoords,
   figureName,
+  filledCoords,
 }: RotateStickProps) => {
   if (figureCoords.every((item) => item.x === figureCoords[0].x)) {
-    checkOrientation({ figureCoords, setFigureCoords, figureName, coord: "x" });
+    checkOrientation({
+      figureCoords,
+      setFigureCoords,
+      figureName,
+      coord: "x",
+      filledCoords,
+    });
     return;
   }
   if (figureCoords.every((item) => item.y === figureCoords[0].y))
-    checkOrientation({ figureCoords, setFigureCoords, figureName, coord: "y" });
+    checkOrientation({
+      figureCoords,
+      setFigureCoords,
+      figureName,
+      coord: "y",
+      filledCoords,
+    });
 };
