@@ -51,7 +51,7 @@ export const useCreateFigure = ({
     fastMoveDownHandler,
     rotate,
   });
-  console.log(figureName);
+
   useEffect(() => {
     if (startGame) {
       const interval = setInterval(() => {
