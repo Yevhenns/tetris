@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Board } from "./components/Board";
 import { GameControls } from "./components/GameControls";
 import { GameInfo } from "./components/GameInfo";
@@ -7,6 +7,21 @@ import { useEngine } from "./hooks/useEngine";
 
 function App() {
   const [speed, setSpeed] = useState(500);
+  const prevSpeedRef = useRef(speed);
+
+  const speedHandler = (speedCount: number) => {
+    prevSpeedRef.current = speedCount;
+    setSpeed(speedCount);
+  };
+
+  const fastMoveDownHandler = (condition: boolean) => {
+    if (!condition) {
+      setSpeed(50);
+    }
+    if (condition) {
+      setSpeed(prevSpeedRef.current);
+    }
+  };
 
   const {
     board,
@@ -17,11 +32,8 @@ function App() {
     score,
     moveLeft,
     moveRight,
-  } = useEngine({ speed });
-
-  const speedHandler = (speedCount: number) => {
-    setSpeed(speedCount);
-  };
+    moveDown,
+  } = useEngine({ speed, fastMoveDownHandler });
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
@@ -32,7 +44,11 @@ function App() {
         figureCoords={figureCoords}
         filledCoords={filledCoords}
       />
-      <GameControls moveLeft={moveLeft} moveRight={moveRight} />
+      <GameControls
+        moveLeft={moveLeft}
+        moveRight={moveRight}
+        moveDown={moveDown}
+      />
     </main>
   );
 }

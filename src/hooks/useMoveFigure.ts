@@ -6,6 +6,7 @@ interface useMoveFigureProps {
   figureCoords: Row;
   filledCoords: Row;
   isCollisionY: boolean;
+  fastMoveDownHandler: (condition: boolean) => void;
 }
 
 export const useMoveFigure = ({
@@ -13,6 +14,7 @@ export const useMoveFigure = ({
   figureCoords,
   filledCoords,
   isCollisionY,
+  fastMoveDownHandler,
 }: useMoveFigureProps) => {
   const getIsCollisionMinusX = () =>
     figureCoords.some((fig) => {
@@ -63,6 +65,16 @@ export const useMoveFigure = ({
     });
   };
 
+  const moveDown = () => {
+    fastMoveDownHandler(isCollisionY);
+  };
+
+  useEffect(() => {
+    if (isCollisionY) {
+      fastMoveDownHandler(true);
+    }
+  }, [fastMoveDownHandler, isCollisionY]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setFigureCoords((prev) => {
@@ -88,6 +100,9 @@ export const useMoveFigure = ({
             return prev.map((item) => ({ x: item.x + 1, y: item.y }));
           }
         }
+        if (e.code === "ArrowDown") {
+          fastMoveDownHandler(isCollisionY);
+        }
         if (e.code === "Space") {
           console.log("rotate");
         }
@@ -98,7 +113,13 @@ export const useMoveFigure = ({
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isCollisionMinusX, isCollisionPlusX, isCollisionY, setFigureCoords]);
+  }, [
+    isCollisionMinusX,
+    isCollisionPlusX,
+    isCollisionY,
+    setFigureCoords,
+    fastMoveDownHandler,
+  ]);
 
-  return { moveLeft, moveRight };
+  return { moveLeft, moveRight, moveDown };
 };

@@ -6,20 +6,25 @@ import { useRandomFigure } from "./useRandomFigure";
 
 interface useCreateFigureProps {
   speed: number;
+  fastMoveDownHandler: (condition: boolean) => void;
 }
 
-export const useCreateFigure = ({ speed }: useCreateFigureProps) => {
+export const useCreateFigure = ({
+  speed,
+  fastMoveDownHandler,
+}: useCreateFigureProps) => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
 
   const { isCollisionY, isGameOver, filledCoords, score } = useFilledBoxes({
     figureCoords,
   });
   const { figure, generateRandomFigure } = useRandomFigure();
-  const { moveLeft, moveRight } = useMoveFigure({
+  const { moveLeft, moveRight, moveDown } = useMoveFigure({
     setFigureCoords,
     figureCoords,
     filledCoords,
     isCollisionY,
+    fastMoveDownHandler,
   });
 
   useEffect(() => {
@@ -50,5 +55,6 @@ export const useCreateFigure = ({ speed }: useCreateFigureProps) => {
     score,
     moveLeft,
     moveRight,
+    moveDown,
   };
 };
