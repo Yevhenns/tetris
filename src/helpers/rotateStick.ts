@@ -27,8 +27,17 @@ const checkOrientation = ({
       return isTouchingBottom || isTouchingFilled;
     });
 
+  const getIsCollisionPlusX = (figure: Row) =>
+    figure.some((fig) => {
+      return filledCoords.some(
+        (filled) => filled.y === fig.y && filled.x === fig.x
+      );
+    });
+
   const isOutOfBorder = (figure: Row) =>
-    figure.some((item) => item.x === END_COLUMN + 1) || getIsCollisionY(figure);
+    figure.some((item) => item.x === END_COLUMN + 1) ||
+    getIsCollisionY(figure) ||
+    getIsCollisionPlusX(figure);
 
   const firstBox = figureCoords[0];
   const { x, y } = firstBox;
