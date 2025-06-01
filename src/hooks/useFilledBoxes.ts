@@ -9,6 +9,21 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
   const [filledCoords, setFilledCoords] = useState<Row>([]);
   const [score, setScore] = useState(0);
 
+  const getIsCollisionY = () =>
+    figureCoords.some((fig) => {
+      const movedY = fig.y + 1;
+
+      const isTouchingBottom = movedY > END_ROW;
+      const isTouchingFilled = filledCoords.some(
+        (filled) => filled.x === fig.x && filled.y === movedY
+      );
+      return isTouchingBottom || isTouchingFilled;
+    });
+
+  const isCollisionY = getIsCollisionY();
+
+  const isGameOver = filledCoords.some((item) => item.y === 1);
+
   useEffect(() => {
     const filteredByRows = [] as Row[];
     const filteredByY = (n: number): Row =>
@@ -40,23 +55,6 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
       }
     });
   }, [filledCoords, score]);
-
-  const getIsCollisionY = () =>
-    figureCoords.some((fig) => {
-      const movedY = fig.y + 1;
-
-      const isTouchingBottom = movedY > END_ROW;
-      const isTouchingFilled = filledCoords.some(
-        (filled) => filled.x === fig.x && filled.y === movedY
-      );
-      return isTouchingBottom || isTouchingFilled;
-    });
-
-  const isCollisionY = getIsCollisionY();
-
-  const isGameOver = filledCoords.some(
-    (item) => (item.x === 5 || item.x === 6) && item.y === 1
-  );
 
   useEffect(() => {
     if (isCollisionY || figureCoords.some((item) => item.y === END_ROW)) {

@@ -1,35 +1,41 @@
 import { useEffect, useState } from "react";
-import { END_COLUMN, END_ROW } from "../assets/constants";
 
-export const useCreateBoard = () => {
+interface useCreateBoard {
+  endColumn: number;
+  endRow: number;
+}
+
+export const useCreateBoard = ({ endColumn, endRow }: useCreateBoard) => {
   const [board, setBoard] = useState<Board>();
 
-  const createRow = (y: number) => {
-    const row = [] as Row;
-
-    for (let i = 1; i <= END_COLUMN; i++) {
-      const rowObject = {
-        x: i,
-        y: y,
-      };
-      row.push(rowObject);
-    }
-
-    return row;
-  };
-
   useEffect(() => {
-    const createBoard = () => {
-      const board = [] as Board;
+    const createRow = (y: number) => {
+      const row = [] as Row;
 
-      for (let i = 1; i <= END_ROW; i++) {
-        board.push(createRow(i));
+      for (let i = 1; i <= endColumn; i++) {
+        const rowObject = {
+          x: i,
+          y: y,
+        };
+        row.push(rowObject);
       }
 
-      return board;
+      return row;
     };
-    setBoard(createBoard());
-  }, []);
+
+    if (endColumn > 0 && endRow > 0) {
+      const createBoard = () => {
+        const board = [] as Board;
+
+        for (let i = 1; i <= endRow; i++) {
+          board.push(createRow(i));
+        }
+
+        return board;
+      };
+      setBoard(createBoard());
+    }
+  }, [endColumn, endRow]);
 
   return { board };
 };

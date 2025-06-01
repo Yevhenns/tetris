@@ -3,10 +3,18 @@ import { useCreateFigure } from "./useCreateFigure";
 
 interface useEngineProps {
   speed: number;
+  fastMoveDownHandler: (condition: boolean) => void;
+  endColumn: number;
+  endRow: number;
 }
 
-export const useEngine = ({ speed }: useEngineProps) => {
-  const { board } = useCreateBoard();
+export const useEngine = ({
+  speed,
+  fastMoveDownHandler,
+  endColumn,
+  endRow,
+}: useEngineProps) => {
+  const { board } = useCreateBoard({ endColumn, endRow });
   const {
     figureCoords,
     filledCoords,
@@ -15,7 +23,9 @@ export const useEngine = ({ speed }: useEngineProps) => {
     score,
     moveLeft,
     moveRight,
-  } = useCreateFigure({ speed });
+    moveDown,
+    startGameHandler,
+  } = useCreateFigure({ speed, fastMoveDownHandler });
 
   return {
     board,
@@ -26,5 +36,7 @@ export const useEngine = ({ speed }: useEngineProps) => {
     score,
     moveLeft,
     moveRight,
+    moveDown,
+    startGameHandler,
   };
 };
