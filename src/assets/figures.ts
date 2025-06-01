@@ -40,6 +40,10 @@ export const figures = [
       { x: 2, y: 2 },
     ],
   },
+  {
+    name: "dot",
+    coords: [{ x: 1, y: 1 }],
+  },
 ];
 
 export type Figure = (typeof figures)[number];
