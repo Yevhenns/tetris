@@ -3,6 +3,7 @@ import { useMoveFigure } from "./useMoveFigure";
 import { END_ROW } from "../assets/constants";
 import { useFilledBoxes } from "./useFilledBoxes";
 import { useRandomFigure } from "./useRandomFigure";
+import { rotateStick } from "../helpers/rotateStick";
 
 interface useCreateFigureProps {
   speed: number;
@@ -15,9 +16,26 @@ export const useCreateFigure = ({
 }: useCreateFigureProps) => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
   const [startGame, setStartGame] = useState(false);
+  const [figureName, setFigureName] = useState<string>();
 
   const startGameHandler = () => {
     setStartGame(true);
+  };
+
+  const rotate = () => {
+    if (isCollisionY) return;
+    if (figureName === "square" || figureName === "dot") return;
+    if (
+      figureName === "shortBarHorizontal" ||
+      figureName === "shortBarVertical" ||
+      figureName === "longBarHorizontal" ||
+      figureName === "longBarVertical"
+    )
+      rotateStick({
+        figureCoords,
+        setFigureCoords,
+        figureName,
+      });
   };
 
   const { isCollisionY, isGameOver, filledCoords, score, restartGame } =
@@ -31,8 +49,9 @@ export const useCreateFigure = ({
     filledCoords,
     isCollisionY,
     fastMoveDownHandler,
+    rotate,
   });
-
+  console.log(figureName);
   useEffect(() => {
     if (startGame) {
       const interval = setInterval(() => {
@@ -42,11 +61,13 @@ export const useCreateFigure = ({
           } else {
             generateRandomFigure();
 
-            if (figure?.maxY)
+            if (figure?.maxY) {
+              setFigureName(figure?.name);
               return figure?.coords.map(({ x, y }) => ({
                 x: x + 4,
                 y: y - figure.maxY + 1,
               }));
+            }
 
             return [];
           }
@@ -73,5 +94,6 @@ export const useCreateFigure = ({
     moveDown,
     startGameHandler,
     restartGame,
+    rotate,
   };
 };
