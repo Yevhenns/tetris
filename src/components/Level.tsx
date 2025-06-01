@@ -2,17 +2,9 @@ import { useState, type FC } from "react";
 
 interface LevelProps {
   speedHandler: (speedCount: number) => void;
-  startGameHandler: () => void;
-  restartGame: () => void;
-  isGameOver: boolean;
 }
 
-export const Level: FC<LevelProps> = ({
-  speedHandler,
-  startGameHandler,
-  restartGame,
-  isGameOver,
-}) => {
+export const Level: FC<LevelProps> = ({ speedHandler }) => {
   const [level, setLevel] = useState(1);
 
   const setLevelHandler = (speed: number, level: number) => {
@@ -53,11 +45,6 @@ export const Level: FC<LevelProps> = ({
           4
         </button>
       </div>
-      {isGameOver ? (
-        <button onClick={restartGame}>Restart</button>
-      ) : (
-        <button onClick={startGameHandler}>Start</button>
-      )}
     </>
   );
 };
