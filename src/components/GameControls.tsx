@@ -19,7 +19,8 @@ export const GameControls: FC<GameControlsProps> = ({
   moveDown,
   rotate,
 }) => {
-  const btn = `bg-yellow-400 text-black font-bold rounded-full w-10 h-10`;
+  const btn = `bg-yellow-400 rounded-full w-10 h-10 shadow-md active:shadow-inner active:translate-y-0.5 transition-all`;
+
   return (
     <>
       {isGameOver ? (
