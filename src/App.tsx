@@ -37,7 +37,7 @@ function App() {
           isGameOver={isGameOver}
         />
       )}
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-24">
         <Board
           board={board}
           figureCoords={figureCoords}
