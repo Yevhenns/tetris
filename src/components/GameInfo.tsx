@@ -6,9 +6,15 @@ interface GameInfoProps {
   isGameOver: boolean;
   figure: Figure | null;
   score: number;
+  level: number;
 }
 
-export const GameInfo: FC<GameInfoProps> = ({ isGameOver, figure, score }) => {
+export const GameInfo: FC<GameInfoProps> = ({
+  isGameOver,
+  figure,
+  score,
+  level,
+}) => {
   const { board } = useCreateBoard({
     endColumn: figure?.maxX || 0,
     endRow: figure?.maxY || 0,
@@ -19,26 +25,28 @@ export const GameInfo: FC<GameInfoProps> = ({ isGameOver, figure, score }) => {
   };
 
   return (
-    <>
-      <div className="text-xl font-bold">
-        {isGameOver ? "🧨 Game Over" : "🎮 Next:"}
-      </div>
-      <div className="h-24">
-        {!isGameOver &&
-          board?.map((row, index) => (
-            <div key={index} className="flex justify-between">
-              {row.map((box, idx) => (
-                <div
-                  key={idx}
-                  className={`w-6 h-6 border border-gray-800
+    <div>
+      <p className="text-lg">🏆 Score: {score}</p>
+      <p>Level: {level}</p>
+      <div className="w-16 h-16">
+        {!isGameOver && (
+          <>
+            <p>🎮 Next:</p>
+            {board?.map((row, index) => (
+              <div key={index} className="flex">
+                {row.map((box, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-4 h-4 border border-gray-800
                   ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
                 `}
-                />
-              ))}
-            </div>
-          ))}
+                  />
+                ))}
+              </div>
+            ))}
+          </>
+        )}
       </div>
-      <p className="text-lg">🏆 Score: {score}</p>
-    </>
+    </div>
   );
 };

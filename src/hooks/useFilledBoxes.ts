@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
-import { END_COLUMN, END_ROW, START_BOX } from "../assets/constants";
+import {
+  END_COLUMN,
+  END_ROW,
+  START_BOX,
+  victoryScore,
+} from "../assets/constants";
 
 interface useFilledBoxesProps {
   figureCoords: Row;
+  endGameHandler: () => void;
 }
 
-export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
+export const useFilledBoxes = ({
+  figureCoords,
+  endGameHandler,
+}: useFilledBoxesProps) => {
   const [filledCoords, setFilledCoords] = useState<Row>([]);
   const [score, setScore] = useState(0);
+  const [win, setWin] = useState(false);
 
   const restartGame = () => {
     setFilledCoords([]);
     setScore(0);
+    setWin(false);
   };
 
   const getIsCollisionY = () =>
@@ -69,5 +80,12 @@ export const useFilledBoxes = ({ figureCoords }: useFilledBoxesProps) => {
     }
   }, [figureCoords, isCollisionY]);
 
-  return { isCollisionY, isGameOver, filledCoords, score, restartGame };
+  useEffect(() => {
+    if (score === victoryScore) {
+      setWin(true);
+      endGameHandler();
+    }
+  }, [endGameHandler, score, setWin]);
+
+  return { isCollisionY, isGameOver, filledCoords, score, restartGame, win };
 };
