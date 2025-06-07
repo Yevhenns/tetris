@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import {
   END_COLUMN,
   END_ROW,
+  SCORE_STEP,
   START_BOX,
-  victoryScore,
+  VICTORY_SCORE,
 } from "../assets/constants";
+import { levels } from "../assets/levels";
 
 interface useFilledBoxesProps {
   figureCoords: Row;
@@ -16,13 +18,13 @@ export const useFilledBoxes = ({
   endGameHandler,
 }: useFilledBoxesProps) => {
   const [filledCoords, setFilledCoords] = useState<Row>([]);
-  const [score, setScore] = useState(0);
-  const [win, setWin] = useState(false);
+  const [score, setScore] = useState(levels[0].score);
+  const [isVictory, setIsVictory] = useState(false);
 
   const restartGame = () => {
     setFilledCoords([]);
-    setScore(0);
-    setWin(false);
+    setScore(levels[0].score);
+    setIsVictory(false);
   };
 
   const getIsCollisionY = () =>
@@ -67,7 +69,7 @@ export const useFilledBoxes = ({
         );
 
         setFilledCoords(movedRows);
-        setScore(score + 10);
+        setScore(score + SCORE_STEP);
       }
     });
   }, [filledCoords, score]);
@@ -81,11 +83,18 @@ export const useFilledBoxes = ({
   }, [figureCoords, isCollisionY]);
 
   useEffect(() => {
-    if (score === victoryScore) {
-      setWin(true);
+    if (score === VICTORY_SCORE) {
+      setIsVictory(true);
       endGameHandler();
     }
-  }, [endGameHandler, score, setWin]);
+  }, [endGameHandler, score, setIsVictory]);
 
-  return { isCollisionY, isGameOver, filledCoords, score, restartGame, win };
+  return {
+    isCollisionY,
+    isGameOver,
+    filledCoords,
+    score,
+    restartGame,
+    isVictory,
+  };
 };

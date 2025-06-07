@@ -2,14 +2,14 @@ import type { FC } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
-  win: boolean;
+  isVictory: boolean;
   startGameHandler: () => void;
   restartGame: () => void;
   isGameOver: boolean;
 }
 
 export const Modal: FC<ModalProps> = ({
-  win,
+  isVictory,
   isGameOver,
   restartGame,
   startGameHandler,
@@ -21,7 +21,7 @@ export const Modal: FC<ModalProps> = ({
       {createPortal(
         <div className="flex items-center justify-center fixed inset-0 bg-black/50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl text-center space-y-4 min-w-[280px]">
-            {win && (
+            {isVictory && (
               <div className="flex flex-col items-center space-y-4">
                 <p className="text-2xl font-bold text-green-600">🏆 Victory!</p>
                 <button onClick={restartGame} className={modalBtn}>
@@ -37,7 +37,7 @@ export const Modal: FC<ModalProps> = ({
                 </button>
               </div>
             )}
-            {!win && !isGameOver && (
+            {!isVictory && !isGameOver && (
               <button onClick={startGameHandler} className={modalBtn}>
                 Start
               </button>

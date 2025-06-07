@@ -2,7 +2,6 @@ import { Board } from "./components/Board";
 import { GameControls } from "./components/GameControls";
 import { GameInfo } from "./components/GameInfo";
 import { useEngine } from "./hooks/useEngine";
-import { END_COLUMN, END_ROW } from "./assets/constants";
 import { Modal } from "./components/Modal";
 
 function App() {
@@ -16,22 +15,19 @@ function App() {
     moveLeft,
     moveRight,
     moveDown,
-    startGame,
+    isGameStarted,
     startGameHandler,
     restartGameHandler,
     rotate,
-    win,
+    isVictory,
     level,
-  } = useEngine({
-    endColumn: END_COLUMN,
-    endRow: END_ROW,
-  });
+  } = useEngine();
 
   return (
     <main className="flex flex-col items-center p-8 space-y-4 min-h-screen text-white">
-      {!startGame && (
+      {!isGameStarted && (
         <Modal
-          win={win}
+          isVictory={isVictory}
           startGameHandler={startGameHandler}
           restartGame={restartGameHandler}
           isGameOver={isGameOver}

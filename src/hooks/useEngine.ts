@@ -1,13 +1,9 @@
+import { END_COLUMN, END_ROW } from "../assets/constants";
 import { useCreateBoard } from "./useCreateBoard";
 import { useCreateFigure } from "./useCreateFigure";
 
-interface useEngineProps {
-  endColumn: number;
-  endRow: number;
-}
-
-export const useEngine = ({ endColumn, endRow }: useEngineProps) => {
-  const { board } = useCreateBoard({ endColumn, endRow });
+export const useEngine = () => {
+  const { board } = useCreateBoard({ endColumn: END_COLUMN, endRow: END_ROW });
   const {
     figureCoords,
     filledCoords,
@@ -17,11 +13,11 @@ export const useEngine = ({ endColumn, endRow }: useEngineProps) => {
     moveLeft,
     moveRight,
     moveDown,
-    startGame,
+    isGameStarted,
     startGameHandler,
     restartGameHandler,
     rotate,
-    win,
+    isVictory,
     level,
   } = useCreateFigure();
 
@@ -35,11 +31,11 @@ export const useEngine = ({ endColumn, endRow }: useEngineProps) => {
     moveLeft,
     moveRight,
     moveDown,
-    startGame,
+    isGameStarted,
     startGameHandler,
     restartGameHandler,
     rotate,
-    win,
+    isVictory,
     level,
   };
 };
