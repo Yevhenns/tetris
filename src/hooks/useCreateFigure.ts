@@ -8,15 +8,15 @@ import { useLevel } from "./useLevel";
 
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
-  const [startGame, setStartGame] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [figureName, setFigureName] = useState<string>();
 
   const startGameHandler = () => {
-    setStartGame(true);
+    setIsGameStarted(true);
   };
 
   const endGameHandler = () => {
-    setStartGame(false);
+    setIsGameStarted(false);
   };
 
   const rotate = () => {
@@ -36,12 +36,21 @@ export const useCreateFigure = () => {
       });
   };
 
-  const { isCollisionY, isGameOver, filledCoords, score, restartGame, win } =
-    useFilledBoxes({
-      figureCoords,
-      endGameHandler,
-    });
-  const { fastMoveDownHandler, level, speed } = useLevel({ score, startGame });
+  const {
+    isCollisionY,
+    isGameOver,
+    filledCoords,
+    score,
+    restartGame,
+    isVictory,
+  } = useFilledBoxes({
+    figureCoords,
+    endGameHandler,
+  });
+  const { fastMoveDownHandler, level, speed } = useLevel({
+    score,
+    isGameStarted,
+  });
   const { figure, generateRandomFigure } = useRandomFigure();
   const { moveLeft, moveRight, moveDown } = useMoveFigure({
     setFigureCoords,
@@ -54,11 +63,11 @@ export const useCreateFigure = () => {
 
   const restartGameHandler = () => {
     restartGame();
-    setStartGame(true);
+    setIsGameStarted(true);
   };
 
   useEffect(() => {
-    if (startGame) {
+    if (isGameStarted) {
       const interval = setInterval(() => {
         setFigureCoords((prevCoords) => {
           if (!isCollisionY && prevCoords.some((item) => item.y < END_ROW)) {
@@ -68,8 +77,9 @@ export const useCreateFigure = () => {
 
             if (figure?.maxY) {
               setFigureName(figure?.name);
+              const startX = 4;
               return figure?.coords.map(({ x, y }) => ({
-                x: x + 4,
+                x: x + startX,
                 y: y - figure.maxY + 1,
               }));
             }
@@ -86,11 +96,11 @@ export const useCreateFigure = () => {
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCollisionY, isGameOver, speed, figure?.coords, startGame]);
+  }, [isCollisionY, isGameOver, speed, figure?.coords, isGameStarted]);
 
   useEffect(() => {
     if (isGameOver) {
-      setStartGame(false);
+      setIsGameStarted(false);
     }
   }, [isGameOver]);
 
@@ -103,11 +113,11 @@ export const useCreateFigure = () => {
     moveLeft,
     moveRight,
     moveDown,
-    startGame,
+    isGameStarted,
     startGameHandler,
     restartGameHandler,
     rotate,
-    win,
+    isVictory,
     level,
   };
 };
