@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { createPortal } from "react-dom";
+import Confetti from "react-confetti";
 
 interface ModalProps {
   isVictory: boolean;
@@ -14,6 +15,8 @@ export const Modal: FC<ModalProps> = ({
   restartGame,
   startGameHandler,
 }) => {
+  const { innerWidth: width, innerHeight: height } = window;
+
   const modalBtn = `px-4 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition`;
 
   return (
@@ -27,6 +30,7 @@ export const Modal: FC<ModalProps> = ({
                 <button onClick={restartGame} className={modalBtn}>
                   Restart
                 </button>
+                <Confetti width={width} height={height} />
               </div>
             )}
             {isGameOver && (
