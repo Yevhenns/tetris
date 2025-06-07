@@ -26,7 +26,7 @@ export const Board: FC<BoardProps> = ({
           {row.map((box, idx) => (
             <div
               key={idx}
-              className={`w-6 h-6 border border-gray-800
+              className={`w-4 h-4 border border-gray-800
                   ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
                   ${
                     isFilledBoard(box.x, box.y) ? "bg-green-600" : "bg-gray-800"

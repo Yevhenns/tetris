@@ -4,22 +4,19 @@ import { END_ROW } from "../assets/constants";
 import { useFilledBoxes } from "./useFilledBoxes";
 import { useRandomFigure } from "./useRandomFigure";
 import { rotateStick } from "../helpers/rotateStick";
+import { useLevel } from "./useLevel";
 
-interface useCreateFigureProps {
-  speed: number;
-  fastMoveDownHandler: (condition: boolean) => void;
-}
-
-export const useCreateFigure = ({
-  speed,
-  fastMoveDownHandler,
-}: useCreateFigureProps) => {
+export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
   const [startGame, setStartGame] = useState(false);
   const [figureName, setFigureName] = useState<string>();
 
   const startGameHandler = () => {
     setStartGame(true);
+  };
+
+  const endGameHandler = () => {
+    setStartGame(false);
   };
 
   const rotate = () => {
@@ -39,10 +36,12 @@ export const useCreateFigure = ({
       });
   };
 
-  const { isCollisionY, isGameOver, filledCoords, score, restartGame } =
+  const { isCollisionY, isGameOver, filledCoords, score, restartGame, win } =
     useFilledBoxes({
       figureCoords,
+      endGameHandler,
     });
+  const { fastMoveDownHandler, level, speed } = useLevel({ score, startGame });
   const { figure, generateRandomFigure } = useRandomFigure();
   const { moveLeft, moveRight, moveDown } = useMoveFigure({
     setFigureCoords,
@@ -52,6 +51,11 @@ export const useCreateFigure = ({
     fastMoveDownHandler,
     rotate,
   });
+
+  const restartGameHandler = () => {
+    restartGame();
+    setStartGame(true);
+  };
 
   useEffect(() => {
     if (startGame) {
@@ -84,6 +88,12 @@ export const useCreateFigure = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCollisionY, isGameOver, speed, figure?.coords, startGame]);
 
+  useEffect(() => {
+    if (isGameOver) {
+      setStartGame(false);
+    }
+  }, [isGameOver]);
+
   return {
     figureCoords,
     filledCoords,
@@ -93,8 +103,11 @@ export const useCreateFigure = ({
     moveLeft,
     moveRight,
     moveDown,
+    startGame,
     startGameHandler,
-    restartGame,
+    restartGameHandler,
     rotate,
+    win,
+    level,
   };
 };

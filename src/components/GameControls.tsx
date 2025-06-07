@@ -1,9 +1,6 @@
 import type { FC } from "react";
 
 interface GameControlsProps {
-  startGameHandler: () => void;
-  restartGame: () => void;
-  isGameOver: boolean;
   moveLeft: () => void;
   moveRight: () => void;
   moveDown: () => void;
@@ -11,9 +8,6 @@ interface GameControlsProps {
 }
 
 export const GameControls: FC<GameControlsProps> = ({
-  startGameHandler,
-  restartGame,
-  isGameOver,
   moveLeft,
   moveRight,
   moveDown,
@@ -23,11 +17,6 @@ export const GameControls: FC<GameControlsProps> = ({
 
   return (
     <>
-      {isGameOver ? (
-        <button onClick={restartGame}>Restart</button>
-      ) : (
-        <button onClick={startGameHandler}>Start</button>
-      )}
       <div className="flex items-center gap-10">
         <div className="flex flex-col gap-4">
           <div className="flex gap-8">
