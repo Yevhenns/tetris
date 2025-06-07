@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { levels } from "../assets/constants";
 
 interface useLevelProps {
   score: number;
@@ -6,8 +7,8 @@ interface useLevelProps {
 }
 
 export const useLevel = ({ score, startGame }: useLevelProps) => {
-  const [level, setLevel] = useState(1);
-  const [speed, setSpeed] = useState(500);
+  const [level, setLevel] = useState(levels[0].level);
+  const [speed, setSpeed] = useState(levels[0].speed);
 
   const prevSpeedRef = useRef(speed);
 

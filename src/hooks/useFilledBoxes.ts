@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { END_COLUMN, END_ROW, START_BOX } from "../assets/constants";
+import {
+  END_COLUMN,
+  END_ROW,
+  START_BOX,
+  victoryScore,
+} from "../assets/constants";
 
 interface useFilledBoxesProps {
   figureCoords: Row;
@@ -76,7 +81,7 @@ export const useFilledBoxes = ({
   }, [figureCoords, isCollisionY]);
 
   useEffect(() => {
-    if (score === 20) {
+    if (score === victoryScore) {
       setWin(true);
       endGameHandler();
     }

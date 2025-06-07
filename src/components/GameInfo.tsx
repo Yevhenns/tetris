@@ -33,18 +33,16 @@ export const GameInfo: FC<GameInfoProps> = ({
           <>
             <p>🎮 Next:</p>
             {board?.map((row, index) => (
-              <>
-                <div key={index} className="flex">
-                  {row.map((box, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-4 h-4 border border-gray-800
+              <div key={index} className="flex">
+                {row.map((box, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-4 h-4 border border-gray-800
                   ${isActiveFigure(box.x, box.y) ? "bg-red-500" : ""}
                 `}
-                    />
-                  ))}
-                </div>
-              </>
+                  />
+                ))}
+              </div>
             ))}
           </>
         )}
