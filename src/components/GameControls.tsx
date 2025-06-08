@@ -13,7 +13,10 @@ export const GameControls: FC<GameControlsProps> = ({
   moveDown,
   rotate,
 }) => {
-  const btn = `bg-yellow-400 rounded-full w-16 h-16 shadow-md active:shadow-inner active:translate-y-0.5 transition-all`;
+  const btn = `bg-yellow-400 hover:bg-yellow-300 text-black
+  rounded-full w-16 h-16 shadow-[0_4px_15px_rgba(255,255,255,0.2)]
+  hover:shadow-[0_6px_20px_rgba(255,255,255,0.3)] active:shadow-inner
+  active:translate-y-1 transition-all duration-200 ease-in-out`;
 
   return (
     <div className="flex items-center gap-16">
