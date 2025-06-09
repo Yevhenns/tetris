@@ -5,6 +5,7 @@ import { useFilledBoxes } from "./useFilledBoxes";
 import { useRandomFigure } from "./useRandomFigure";
 import { rotateStick } from "../helpers/rotateStick";
 import { useLevel } from "./useLevel";
+import { rotateAngle } from "../helpers/rotateAngle";
 
 export const useCreateFigure = () => {
   const [figureCoords, setFigureCoords] = useState<Row>([]);
@@ -29,6 +30,18 @@ export const useCreateFigure = () => {
       figureName === "longBarVertical"
     )
       rotateStick({
+        figureCoords,
+        setFigureCoords,
+        figureName,
+        filledCoords,
+      });
+    if (
+      figureName === "angle1" ||
+      figureName === "angle2" ||
+      figureName === "angle3" ||
+      figureName === "angle4"
+    )
+      rotateAngle({
         figureCoords,
         setFigureCoords,
         figureName,
